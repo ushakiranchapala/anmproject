@@ -9,14 +9,15 @@ conn = sqlite3.connect('test.db')
 c= conn.cursor()
 
 def create_table():
-    c.execute('CREATE TABLE IF NOT EXISTS table1(unix REAL, datestamp TEXT, key$
+    c.execute('CREATE TABLE IF NOT EXISTS table1(device REAL, vlan TEXT, ke$
 
 def data_entry():
-    c.execute("INSERT INTO table1 VALUES(14512, '2016-01-02', 'python', 8)")
+    c.execute("INSERT INTO table1 VALUES(2, 12, 80 , 1)")
     conn.commit()
     c.close()
     conn.close()
 
 create_table()
 data_entry()
+
 
