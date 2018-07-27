@@ -9,7 +9,7 @@ conn = sqlite3.connect('test.db')
 c= conn.cursor()
 
 def create_table():
-    c.execute('CREATE TABLE IF NOT EXISTS table1(device REAL, vlan TEXT, ke$
+    c.execute('CREATE TABLE IF NOT EXISTS table1(unix REAL, datestamp TEXT, port  TEXT, mac REAL)')
 
 def data_entry():
     c.execute("INSERT INTO table1 VALUES(2, 12, 80 , 1)")
@@ -19,5 +19,5 @@ def data_entry():
 
 create_table()
 data_entry()
-
+sleep(5)
 
