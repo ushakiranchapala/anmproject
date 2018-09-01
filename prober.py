@@ -2,7 +2,7 @@ from easysnmp import Session
 import  sqlite3
 import time
 # Create an SNMP session to be used for all our requests
-ip='192.168.184.98'
+ip='192.168.184.23'
 vl = "DEFAULT_VLAN"
 session = Session(hostname=ip, community='public', version=2)
 while True:
@@ -11,7 +11,7 @@ while True:
  ports = session.walk('.1.3.6.1.2.1.17.4.3.1.2')
 
  #print system_items
- dbase = sqlite3.connect('ourdata4.db')
+ dbase = sqlite3.connect('ourdata2.db')
  dbase.execute(''' CREATE TABLE IF NOT EXISTS finalproject(
 
             IPADDRESS TEXT NOT NULL,
