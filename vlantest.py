@@ -1,12 +1,16 @@
-myhex = "50"
-scale = 16
-numofbits=8
-orghex = bin(int(myhex, scale))[2:].zfill(numofbits)
-print orghex
+combine=''
+myhexlist = ['20', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00', '00']
+for i in range(len(myhexlist)):
+     myhex = myhexlist[i]
+     scale = 16
+     numofbits=8
+     orghex = bin(int(myhex, scale))[2:].zfill(numofbits)
+     print orghex
+     
+     combine = combine + str(orghex)
+     print combine
+     listvls = list(combine)
 count = 1
-combine = str(orghex) + '0010000'
-print combine
-listvls = list(combine)
 for i in range(len(listvls)):
     if listvls[i] == '1':
     

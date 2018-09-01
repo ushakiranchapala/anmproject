@@ -16,7 +16,7 @@ dbase.execute(''' CREATE TABLE IF NOT EXISTS finalproject(
             IPADDRESS TEXT NOT NULL,
             VLAN TEXT NOT NULL,
             PORT TEXT NOT NULL,
-            MACS TEXT NOT NULL)''')
+cp            MACS TEXT NOT NULL)''')
 for a,b in zip(macs,ports):
     
         oid=a.oid
