@@ -1,0 +1,16 @@
+import  sqlite3
+
+dbase = sqlite3.connect('ourdata1.db')
+ip = '123.13.5436.6'
+vl = '45'
+ports = '80'
+mac = 'jgnsrilg85iy7'
+dbase.execute(''' CREATE TABLE IF NOT EXISTS finalproject(
+            
+            IPADDRESS TEXT NOT NULL,
+            VLAN TEXT NOT NULL,
+            PORT TEXT NOT NULL,
+            MACS TEXT NOT NULL)''')
+dbase.execute(''' INSERT INTO finalproject(IPADDRESS,VLAN,PORT,MACS) VALUES(?,?,?,?)''', (ip,vl,ports,mac))
+dbase.commit()
+dbase.close
