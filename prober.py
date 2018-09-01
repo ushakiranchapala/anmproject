@@ -10,7 +10,7 @@ macs     = session.walk('.1.3.6.1.2.1.17.4.3.1.1')
 ports = session.walk('.1.3.6.1.2.1.17.4.3.1.2')
 
 #print system_items
-dbase = sqlite3.connect('ourdata1.db')
+dbase = sqlite3.connect('ourdata2.db')
 dbase.execute(''' CREATE TABLE IF NOT EXISTS finalproject(
 
             IPADDRESS TEXT NOT NULL,
