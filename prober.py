@@ -3,12 +3,14 @@ import  sqlite3
 import time
 # Create an SNMP session to be used for all our requests
 ip='192.168.184.23'
-dbase = sqlite3.connect('ourdata2.db')
-data = dbase.execute("select * from manager")
+
+
 
 vl = "DEFAULT_VLAN(1)"
 
 while True:
+ dbase = sqlite3.connect('ourdata2.db')
+ data = dbase.execute("select * from manager")
  for cred in data:
   # Perform an SNMP walk
   
@@ -16,18 +18,19 @@ while True:
   portadd = cred[1]
   community = cred[2]
   version = cred[3]
-  session = Session(hostname=ip, community=community, version=2)
-  print "ip =  %s port= %s com= %s ver= %s EOL" % (ipadd, portadd, community, version) 
-  macs     = session.walk('.1.3.6.1.2.1.17.4.3.1.1')
-  ports = session.walk('.1.3.6.1.2.1.17.4.3.1.2')
- 
+  try:
+   session = Session(hostname=ipadd, community=community, version=2)
+   print "ip =  %s port= %s com= %s ver= %s EOL" % (ipadd, portadd, community, version) 
+   macs     = session.walk('.1.3.6.1.2.1.17.4.3.1.1')
+   ports = session.walk('.1.3.6.1.2.1.17.4.3.1.2')
+  except:
+   print "timeout"
+   continue
+  starttime = time.time()
+  fintime=time.ctime(int(starttime))
+  print "ok"
   #print system_items
-  dbase.execute(''' CREATE TABLE IF NOT EXISTS finalproject(
-
-             IPADDRESS TEXT ,
-             VLAN TEXT ,
-             PORT TEXT ,
-             MACS TEXT )''')
+  
   
   for a,b in zip(macs,ports):
      
@@ -37,9 +40,21 @@ while True:
          mac=':'.join('{:02x}'.format(ord(x)) for x in a.value)
          portval =b.value
          
-         #print ip,mac, port
-         dbase.execute(''' INSERT INTO finalproject(IPADDRESS,VLAN,PORT,MACS) VALUES(?,?,?,?)''', (ip,vl,portval,mac))
+         print ip,mac, portval
+         data = dbase.execute("SELECT * from finalproject where (PORT =? AND IPADDRESS=?)", (portval,ip,))
+         rows = data.fetchall()
+         for finalmacs in rows:
+           k = finalmacs[3]
+         if len(rows)==0:
+           print ip,mac,portval
+           dbase.execute(''' INSERT INTO finalproject(IPADDRESS,VLAN,PORT,MACS) VALUES(?,?,?,?)''', (ip,vl,portval,mac))
  
+           dbase.commit()
+         elif len(rows)==1 and k.find(mac) is -1:
+           endmac=k+","+mac
+           dbase.execute("UPDATE finalproject set MACS=? where PORT = ?",(endmac,portval,))
+           dbase.commit()
+         dbase.execute("UPDATE manager set firstprob=?, lastprob=? where ip = ?",(fintime,fintime,ip,))
          dbase.commit()
          
          
