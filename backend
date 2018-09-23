@@ -54,8 +54,8 @@ while True:
            endmac=k+","+mac
            dbase.execute("UPDATE finalproject set MACS=? where PORT = ?",(endmac,portval,))
            dbase.commit()
-         dbase.execute("UPDATE manager set firstprob=?, lastprob=? where ip = ?",(fintime,fintime,ipadd,))
-         dbase.commit()
+  dbase.execute("UPDATE manager set firstprob=?, lastprob=? where ip = ?",(fintime,fintime,ipadd,))
+  dbase.commit()
          
          
   #vlan config
