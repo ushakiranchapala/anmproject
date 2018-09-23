@@ -20,7 +20,7 @@ while True:
   version = cred[3]
   try:
    session = Session(hostname=ipadd, community=community, version=2)
-   print "ip =  %s port= %s com= %s ver= %s EOL" % (ipadd, portadd, community, version) 
+   #print "ip =  %s port= %s com= %s ver= %s EOL" % (ipadd, portadd, community, version) 
    macs     = session.walk('.1.3.6.1.2.1.17.4.3.1.1')
    ports = session.walk('.1.3.6.1.2.1.17.4.3.1.2')
   except:
@@ -40,7 +40,7 @@ while True:
          mac=':'.join('{:02x}'.format(ord(x)) for x in a.value)
          portval =b.value
          
-         print ipadd,mac, portval
+         #print ipadd,mac, portval
          data = dbase.execute("SELECT * from finalproject where (PORT =? AND IPADDRESS=?)", (portval,ipadd,))
          rows = data.fetchall()
          for finalmacs in rows:
