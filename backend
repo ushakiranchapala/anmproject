@@ -2,7 +2,7 @@ from easysnmp import Session
 import  sqlite3
 import time
 # Create an SNMP session to be used for all our requests
-ip='192.168.184.23'
+
 
 
 
@@ -40,21 +40,21 @@ while True:
          mac=':'.join('{:02x}'.format(ord(x)) for x in a.value)
          portval =b.value
          
-         print ip,mac, portval
-         data = dbase.execute("SELECT * from finalproject where (PORT =? AND IPADDRESS=?)", (portval,ip,))
+         print ipadd,mac, portval
+         data = dbase.execute("SELECT * from finalproject where (PORT =? AND IPADDRESS=?)", (portval,ipadd,))
          rows = data.fetchall()
          for finalmacs in rows:
            k = finalmacs[3]
          if len(rows)==0:
-           print ip,mac,portval
-           dbase.execute(''' INSERT INTO finalproject(IPADDRESS,VLAN,PORT,MACS) VALUES(?,?,?,?)''', (ip,vl,portval,mac))
+           #print ip,mac,portval
+           dbase.execute(''' INSERT INTO finalproject(IPADDRESS,VLAN,PORT,MACS) VALUES(?,?,?,?)''', (ipadd,vl,portval,mac))
  
            dbase.commit()
          elif len(rows)==1 and k.find(mac) is -1:
            endmac=k+","+mac
            dbase.execute("UPDATE finalproject set MACS=? where PORT = ?",(endmac,portval,))
            dbase.commit()
-         dbase.execute("UPDATE manager set firstprob=?, lastprob=? where ip = ?",(fintime,fintime,ip,))
+         dbase.execute("UPDATE manager set firstprob=?, lastprob=? where ip = ?",(fintime,fintime,ipadd,))
          dbase.commit()
          
          
@@ -108,8 +108,8 @@ while True:
                  vlansnum.append(num)
                     
                 
-  print vlansnum
-  print vlanname
+  #print vlansnum
+  #print vlanname
   for i in range(len(vlansnum)):
       portlan = "1"
       dbase.execute(""" UPDATE finalproject SET VLAN = ?  where PORT = ? """, (vlanname[i],vlansnum[i]))
