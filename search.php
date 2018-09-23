@@ -2,7 +2,7 @@
   include('config.php');
 $searchstr = $_GET[mac];
    $sql =<<<EOF
-      SELECT * from finalproject WHERE MACS LIKE "$searchstr%"  ORDER BY MACS ;
+      SELECT * from finalproject WHERE MACS LIKE "%$searchstr%"  ORDER BY MACS ;
 EOF;
 
    $ret = $db->query($sql);
